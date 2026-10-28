@@ -12,6 +12,16 @@ dist
 dist-ssr
 *.local
 
+# Python venv
+.venv/
+
+# Env
+.env
+
+# OS junk
+.DS_Store
+Thumbs.db
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
