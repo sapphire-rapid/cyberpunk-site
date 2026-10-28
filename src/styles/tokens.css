@@ -1,0 +1,53 @@
+@theme {
+  --color-void: #05060d;
+  --color-ink: #0b0d1a;
+  --color-panel: #11142a;
+  --color-line: rgba(0, 229, 255, 0.22);
+  --color-text: #d7e3f4;
+  --color-muted: #8a96ba;
+  --color-cyan: #00e5ff;
+  --color-magenta: #ff2e88;
+  --color-amber: #ffb000;
+  --color-alarm: #ff3b30;
+
+  --font-display: "Chakra Petch", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  --void: #05060d;
+  --ink: #0b0d1a;
+  --panel: #11142a;
+  --line: rgba(0, 229, 255, 0.22);
+  --text: #d7e3f4;
+  --muted: #8a96ba;
+  --cyan: #00e5ff;
+  --magenta: #ff2e88;
+  --amber: #ffb000;
+  --alarm: #ff3b30;
+}
+
+html {
+  font-family: var(--font-body);
+  background: var(--void);
+  color: var(--text);
+}
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--text);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+}
