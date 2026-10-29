@@ -39,10 +39,11 @@ const heroFxConfig = {
     targets: "a, button, [data-swarm-target]", idle: "roam", clickEffect: "burst",
     hideCursor: false, intro: true, lightMode: false, dpr: 1.5,
   },
+  enterLabel: "LEARN MORE",
   glassEnter: {
-    size: 72, columns: 1, roundness: 0.25, refraction: 0.8, bevel: 0.6, dispersion: 0.25,
-    frost: 0.2, shine: 0.85, tint: "#00e5ff", tintOpacity: 0.18, iconColor: "#d7e3f4",
-    plate: "tilt", tilt: 30, hover: "press", parallax: 1, labels: "hover", intro: true, theme: "dark",
+    size: 96, columns: 1, roundness: 0.25, refraction: 0.8, bevel: 0.6, dispersion: 0.25,
+    frost: 0.2, shine: 0.85, tint: "#00e5ff", tintOpacity: 0.14, iconColor: "#d7e3f4",
+    plate: "none", tilt: 0, hover: "press", parallax: 0.4, labels: "none", intro: true, theme: "dark",
   },
 };
 
@@ -498,7 +499,7 @@ export default function Hero() {
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
       {showSwarm ? (
         <SwarmCursor {...heroFxConfig.swarm} className="absolute inset-0">
-          <div className="relative z-10 flex flex-col items-center text-center px-4" style={{ position: "absolute", top: "32%", left: "50%", transform: "translate(-50%, -50%)", pointerEvents: "none" }}>
+          <div className="relative z-10 flex flex-col items-center text-center px-4" style={{ position: "absolute", top: "26%", left: "50%", transform: "translate(-50%, -50%)", pointerEvents: "none" }}>
             <h1
               ref={titleRef}
               className="text-display font-display font-bold tracking-tight rgb-split"
@@ -509,10 +510,10 @@ export default function Hero() {
             </h1>
             <p className="text-mono-label mt-2" style={{ color: "var(--text)", pointerEvents: "auto" }}>A SUBGENRE OF SCIENCE FICTION // HIGH TECH, LOW LIFE</p>
           </div>
-          <div style={{ position: "absolute", bottom: "calc(34% + 24px)", left: "50%", transform: "translateX(-50%)", pointerEvents: "auto" }}>
-            <Suspense fallback={<button onClick={scrollToContent} className="text-mono-label text-cyan border border-cyan px-4 py-2" aria-label="Enter: scroll to the article">[ ENTER ]</button>}>
+          <div style={{ position: "absolute", bottom: "calc(32% + 24px)", left: "50%", transform: "translateX(-50%)", pointerEvents: "auto" }}>
+            <Suspense fallback={<button onClick={scrollToContent} className="text-mono-label text-cyan border border-cyan px-4 py-2" aria-label="Learn more: scroll to the article">{heroFxConfig.enterLabel}</button>}>
               <GlassIcons
-                items={[{ icon: (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" /></svg>), label: "ENTER", onClick: scrollToContent }]}
+                items={[{ icon: (<span style={{ fontFamily: "JetBrains Mono, monospace", fontWeight: 500, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.14em", color: "var(--text)", lineHeight: 1.1, textAlign: "center", whiteSpace: "pre-line" }}>LEARN{"\n"}MORE</span>), label: "Learn more: scroll to the article", onClick: scrollToContent }]}
                 {...heroFxConfig.glassEnter}
               />
             </Suspense>
@@ -520,12 +521,12 @@ export default function Hero() {
         </SwarmCursor>
       ) : (
         <>
-          <div className="relative z-10 flex flex-col items-center text-center px-4" style={{ position: "absolute", top: "32%", left: "50%", transform: "translate(-50%, -50%)" }}>
+          <div className="relative z-10 flex flex-col items-center text-center px-4" style={{ position: "absolute", top: "26%", left: "50%", transform: "translate(-50%, -50%)" }}>
             <h1 ref={titleRef} className="text-display font-display font-bold tracking-tight rgb-split" aria-label="CYBERPUNK">CYBERPUNK</h1>
             <p className="text-mono-label mt-2" style={{ color: "var(--text)" }}>A SUBGENRE OF SCIENCE FICTION // HIGH TECH, LOW LIFE</p>
           </div>
-          <div style={{ position: "absolute", bottom: "calc(34% + 24px)", left: "50%", transform: "translateX(-50%)" }}>
-            <button onClick={scrollToContent} className="text-mono-label text-cyan border border-cyan px-4 py-2" aria-label="Enter: scroll to the article">[ ENTER ]</button>
+          <div style={{ position: "absolute", bottom: "calc(32% + 24px)", left: "50%", transform: "translateX(-50%)" }}>
+            <button onClick={scrollToContent} className="text-mono-label text-cyan border border-cyan px-4 py-2" aria-label="Learn more: scroll to the article">{heroFxConfig.enterLabel}</button>
           </div>
         </>
       )}
