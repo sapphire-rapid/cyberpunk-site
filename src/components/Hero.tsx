@@ -51,17 +51,13 @@ export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const [debug, setDebug] = useState(false);
+  const debug = new URLSearchParams(window.location.search).has("debug");
   const swarmOff = new URLSearchParams(window.location.search).has("swarm") && new URLSearchParams(window.location.search).get("swarm") === "off";
   const reducedMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const [fps, setFps] = useState(0);
-  const [running, setRunning] = useState(false);
+  const [running] = useState(false);
   const [size, setSize] = useState({ w: 0, h: 0, dpr: 1 });
   const [glyphsAboveRoof, setGlyphsAboveRoof] = useState(0);
-
-  useEffect(() => {
-    setDebug(new URLSearchParams(window.location.search).has("debug"));
-  }, []);
 
   const matrixOff = new URLSearchParams(window.location.search).has("matrix") && new URLSearchParams(window.location.search).get("matrix") === "off";
 
@@ -83,7 +79,6 @@ export default function Hero() {
     let pausedByIO = false;
     let last = performance.now();
     const frameInterval = 1000 / CONFIG.maxFps;
-    let frames = 0;
     let fpsFrames = 0;
     let fpsLast = performance.now();
     // (parallax disabled)
@@ -332,7 +327,7 @@ export default function Hero() {
           if (glyphAtlas) {
             ctx.globalAlpha = alpha;
             const srcX = (gi >= 0 ? gi : 0) * cell;
-            const srcY = CONFIG.matrix.rainbow === "neon" ? (colorIdx === 3 ? 3 : colorIdx) * cell : Math.floor((s.col * 7) % 360) * 0; // full uses hue cycling not in atlas rows; fallback row 0
+            const srcY = CONFIG.matrix.rainbow === "neon" ? (colorIdx === 3 ? 3 : colorIdx) * cell : 0; // full uses hue cycling not in atlas rows; fallback row 0
             ctx.drawImage(glyphAtlas, srcX * dpr, srcY * dpr, cell * dpr, cell * dpr, colX, gy - cell, cell, cell);
           }
         }
@@ -375,14 +370,12 @@ export default function Hero() {
       ctx.restore();
       ctx.globalAlpha = 1;
 
-      frames++;
       fpsFrames++;
       if (now - fpsLast >= 500) {
         setFps(Math.round((fpsFrames * 1000) / (now - fpsLast)));
         fpsFrames = 0;
         fpsLast = now;
       }
-      setRunning(true);
       raf = requestAnimationFrame(draw);
     }
 
@@ -398,11 +391,9 @@ export default function Hero() {
       if (document.hidden) {
         paused = true;
         cancelAnimationFrame(raf);
-        setRunning(false);
       } else if (!pausedByIO) {
         paused = false;
         raf = requestAnimationFrame(draw);
-        setRunning(true);
       }
     }
 
@@ -414,14 +405,12 @@ export default function Hero() {
             pausedByIO = false;
             paused = false;
             raf = requestAnimationFrame(draw);
-            setRunning(true);
           }
         } else {
           pausedByIO = true;
           paused = true;
           cancelAnimationFrame(raf);
-          setRunning(false);
-        }
+          }
       });
     }, { threshold: 0.1 });
     io.observe(ct);
@@ -434,10 +423,8 @@ export default function Hero() {
     resize();
     if (!reduced) {
       raf = requestAnimationFrame(draw);
-      setRunning(true);
     } else {
       drawStatic();
-      setRunning(false);
     }
 
     return () => {
@@ -449,7 +436,7 @@ export default function Hero() {
       document.removeEventListener("visibilitychange", onVisibility);
       clearTimeout(resizeTimer);
     };
-  }, []);
+  }, [matrixOff]);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

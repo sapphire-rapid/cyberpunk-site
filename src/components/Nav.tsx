@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { scrollToTarget } from "../lib/motion";
 import type { Section } from "../data/types";
 
 export default function Nav({ sections, onOverlayChange }: { sections: Section[]; onOverlayChange?: (open: boolean) => void }) {
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
-  const toggleOpen = (v: boolean) => { setOpen(v); onOverlayChange?.(v); };
+  const toggleOpen = useCallback((v: boolean) => { setOpen(v); onOverlayChange?.(v); }, [onOverlayChange]);
   const [railVisible, setRailVisible] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -53,7 +53,7 @@ export default function Nav({ sections, onOverlayChange }: { sections: Section[]
     const focusables = overlayRef.current?.querySelectorAll<HTMLElement>("a,button");
     focusables?.[0]?.focus();
     return () => document.removeEventListener("keydown", onKey);
-  }, [open]);
+  }, [open, toggleOpen]);
 
   const goTo = (i: number) => {
     scrollToTarget("#" + sections[i].id, -80);

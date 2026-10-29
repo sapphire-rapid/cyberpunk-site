@@ -6,10 +6,11 @@ export default function ScrambleText({ text }: { text: string }) {
   const [display, setDisplay] = useState(text);
   const ref = useRef<HTMLSpanElement>(null);
   const done = useRef(false);
+  const reducedRef = useRef(false);
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) { setDisplay(text); return; }
+    reducedRef.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedRef.current) return;
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver((entries) => {

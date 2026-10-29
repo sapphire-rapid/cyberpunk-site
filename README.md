@@ -1,32 +1,37 @@
-# React + TypeScript + Vite
+# Cyberpunk Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A static, heavily stylised cyberpunk information site. Content is the Wikipedia article "Cyberpunk", scraped once at build time and rendered through a neon-noir design. Learning/portfolio project, deployed to a free host subdomain.
 
-Currently, two official plugins are available:
+## Run the scraper
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+Windows:
+```
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r scripts/requirements.txt
+.venv\Scripts\python.exe scripts/scrape.py
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+macOS/Linux:
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r scripts/requirements.txt
+python scripts/scrape.py
+```
+
+## Dev / build / preview
+
+```
+npm install
+npm run dev
+npm run build
+npm run preview
+```
+
+## Deploy
+
+Import the repo into Vercel or Netlify: framework preset Vite, build command `npm run build`, output `dist`, no env vars.
+
+## Attribution
+
+Article text is CC BY-SA 4.0 from Wikipedia. The site is not affiliated with or endorsed by Wikipedia or the Wikimedia Foundation. Images are from Wikimedia Commons with credits in the footer. React Bits components (SwarmCursor, GlassIcons) are vendored under their licence. Other libraries: Vite, React, Tailwind CSS, GSAP, Lenis, @fontsource.
